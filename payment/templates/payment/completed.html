@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200&family=Rubik:wght@400;500;600;700&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/utilities.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/queries.css' %}" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/custom.js' %}" defer></script>
+    
+    
+    <title>Payment completed</title>
+  </head>
+  <body>
+    
+    <!-- Section cart starts -->
+    <div class="container">
+      <div class="payment-container">
+        <a href="{% url 'home' %}" class="completed-icon"><i class='bx bx-check-circle'></i></a>
+        <div class="complated-wrapper">
+          <p class="completed-header">Congratulation!!</p>
+          <p class="order-id">Order number: <strong>{{order_id}}</strong></p>
+          <p class="completed-text">Your order has been paid successfully.</p>
+        </div>
+      </div>
+    </div>
+      <!-- Section cart ends -->
+  </body>
+</html>

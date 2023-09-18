@@ -1,0 +1,79 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Categories and Products{% endblock title %}
+
+{% block content %}
+
+    
+
+    <!-- User profile starts -->
+    <div class="container grid grid--righ--col--lg">
+      {% include 'include/menubar.html' %}
+
+      <div class="cat-pro-container">
+        <div class="dashbord">
+          <div class="dash-heading-wrapper no-margin-top">
+            <h2 class="heading-secondary cat-heading">Categories</h2>
+            {% if request.user.is_staff %}
+            <div class="add">
+              <a href="{% url 'add-category' %}">
+                <p class="add-text">Add category</p>
+              </a>
+              <i class="bx bx-plus add-icon"></i>
+            </div>
+            {% endif %}
+          </div>
+          {% if category_obj %}
+          <div class="dash-items grid grid--3--cols">
+            
+            {% for cat in category_obj %}
+            <div class="item category-item" data-url="{% url 'single-category' cat.id %}">
+              <div class="item-image">
+                <img
+                  src="{{cat.category_picture.url}}"
+                  alt="product category" />
+              </div>
+              <p class="item-des">{{cat.category_name}}</p>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- paginator -->
+          <div class="pagination">
+            <ul class="page-num">
+
+              {% if category_obj.has_previous %}
+              <li><a href="?page={{category_obj.previous_page_number}}"><i class='bx bx-chevron-left pag-btn pag-left'></i></a></li>
+              {% endif %}
+
+              {% for page in paginator.page_range %}
+              {% if page == category_obj.number %}
+              <li class="num num-active"><a href="?page={{page}}">{{page}}</a></li>
+              {% else %}
+              <li class="num"><a href="?page={{page}}">{{page}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if category_obj.has_next %}
+              <li><a href="?page={{category_obj.next_page_number}}"><i class="bx bx-chevron-right pag-btn pag-right"></i></a></li>
+              {% endif %}
+            </ul>
+          </div>
+          <!-- paginator ends -->
+
+          <!-- empty category -->
+          {% else %}
+            <div class="info-empty">
+              <h2>No category added yet!</h2>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% include 'include/alert.html' %}
+    {% endblock content %}
+
+    {% block script %}
+    <script src="{% static 'js/custom.js' %}" defer></script>
+    {% endblock script %}

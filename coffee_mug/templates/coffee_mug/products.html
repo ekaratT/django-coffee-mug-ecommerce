@@ -1,0 +1,80 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Categories and Products{% endblock title %}
+
+{% block content %}
+
+    
+
+    <!-- User profile starts -->
+    <div class="container grid grid--righ--col--lg">
+      {% include 'include/menubar.html' %}
+
+      <div class="cat-pro-container">
+
+        <div class="dashbord dash-pro">
+          <div class="dash-heading-wrapper no-margin-top">
+            <h2 class="heading-secondary pro-heading">Products</h2>
+            {% if request.user.is_staff %}
+            <div class="add">
+              <a href="{% url 'add-product' %}">
+                <p class="add-text">Add product</p>
+              </a>
+              <i class="bx bx-plus add-icon"></i>
+            </div>
+            {% endif %}
+          </div>
+          {% if pro_obj %}
+          <div class="dash-items grid grid--3--cols">
+            {% for pro in pro_obj %}
+              <div class="item">
+                <div class="item-image">
+                  <a href="{% url 'single-product' pro.id %}">
+                    <img src="{{pro.product_picture.url}}" alt="product" />
+                  </a>
+                </div>
+                <a href="{% url 'single-product' pro.id %}">
+                  <p class="item-des">{{pro.product_name}}</p>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+          
+          <div class="pagination">
+            <ul class="page-num">
+
+              {% if pro_obj.has_previous %}
+              <li><a href="?page={{pro_obj.previous_page_number}}"><i class='bx bx-chevron-left pag-btn pag-left'></i></a></li>
+              {% endif %}
+
+              {% for page in paginator.page_range %}
+              {% if page == pro_obj.number %}
+              <li class="num num-active"><a href="?page={{page}}">{{page}}</a></li>
+              {% else %}
+              <li class="num"><a href="?page={{page}}">{{page}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if pro_obj.has_next %}
+              <li><a href="?page={{pro_obj.next_page_number}}"><i class="bx bx-chevron-right pag-btn pag-right"></i></a></li>
+              {% endif %}
+
+            </ul>
+            
+          </div>
+          {% else %}
+          <div class="info-empty">
+            <h2>No product yet!</h2>
+          </div>
+          {% endif %}
+        </div>
+        
+      </div>
+    </div>
+
+    {% include 'include/alert.html' %}
+    {% endblock content %}
+
+    {% block script %}
+    <script src="{% static 'js/custom.js' %}" defer></script>
+    {% endblock script %}

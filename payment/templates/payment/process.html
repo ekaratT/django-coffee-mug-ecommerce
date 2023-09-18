@@ -1,0 +1,63 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Cart page{% endblock title %}
+
+{% block content %}
+
+    <!-- Section cart starts -->
+    <div class="container cart-wrapper grid">
+      <div class="cart-container">
+        <h3 class="cart-heading">Order review</h3>
+        <div class="cart">
+          <div class="cart-th grid grid--3--cols">
+            <h3>Product</h3>
+            <h3>Quantity</h3>
+            <h3>Price</h3>
+          </div>
+          {% for item in order_items %}
+            <div class="product-data cart-td grid grid--3--cols" id="cart__item__{{item.id}}" data-item-id="{{item.id}}">
+              <div class="cart-image">
+                <img src="{{item.product.product_picture.url}}" alt="" />
+              </div>
+              <div class="item-qty">
+                <input type="hidden" class="cart-item-id" value="{{item.product.product.id}}">
+                <input type="hidden" id="item-id" value="{{item.id}}">
+                {% csrf_token %}
+                <span class="cart-item-qty">{{item.quantity}}</span>
+              </div>
+              <p>${{item.product.price}}</p>
+            </div>
+          {% endfor %}
+          <div class="cart-td grid grid--3--cols cart-footer">
+            <div></div>
+            <p class="sub-total-text">Subtotal:</p>
+            <p class="sub-total-price" id="cart-sub-total">${{order.get_sub_total}}</p>
+          </div>
+          <div class="cart-td grid grid--3--cols cart-footer">
+            <div></div>
+            <p class="tax text">Fee:</p>
+            <p class="tax price" id="cart-fee">${{order.get_fee}}</p>
+          </div>
+          <div class="cart-td grid grid--3--cols cart-sumary">
+            <div></div>
+            <p class="grand-total-text">Total:</p>
+            <p class="grand-total-price">${{order.get_grand_total}}</p>
+          </div>
+        </div>
+      </div>
+      <form action="{% url 'proceed' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn checkout-complete-button">Complete checkout</button>
+      </form>
+    </div>
+
+    <!-- Section cart ends -->
+
+  {% include 'include/alert.html' %}
+{% endblock content %}
+
+
+{% block script %}
+<script src="{% static 'js/custom.js' %}" defer></script>
+{% endblock script %}
+

@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Add product page{% endblock title %}
+
+{% block content %}
+
+    <!-- User profile starts -->
+    <div class="container grid grid--righ--col--lg">
+      {% include 'include/menubar.html' %}
+
+      <div class="form-input-container">
+        <h3 class="form-input-heading heading-sm">Add product</h3>
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-element grid grid--2--cols">
+              {% for field in form %}
+                <div class="form-input">
+                  <label for="{{field.name}}">{{field.label}}</label>
+                  {{field}}
+                </div>
+            {% endfor %}
+          </div>
+          <button class="btn btn-add-pro" type="submit">Add product</button>
+
+        </form>
+      </div>
+    </div>
+    {% include 'include/alert.html' %}
+    {% endblock content %}
+
+    {% block script %}
+    <script src="{% static 'js/custom.js' %}" defer></script>
+    {% endblock script %}

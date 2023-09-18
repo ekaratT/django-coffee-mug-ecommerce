@@ -1,0 +1,139 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Checkout{% endblock title %}
+
+{% block content %}
+
+    <!-- Section cart starts -->
+    <div class="container cart-wrapper grid" id="cart-wrapper">
+      <div class="cart-container">
+        <h3 class="cart-heading">Summary</h3>
+        <div class="cart-checkout">
+          <div class="cart-th grid grid--3--cols">
+            <h3>Product</h3>
+            <h3>Quantity</h3>
+            <h3>Price</h3>
+          </div>
+          {% for item in cart %}
+          {% with product=item.product %}
+          <div class="product-data cart-td grid grid--3--cols" id="cart__item__{{item.id}}" data-item-id="{{item.id}}">
+            <div class="cart-image">
+              <img src="{{product.product_picture.url}}" alt="" />
+            </div>
+            <div class="item-qty">
+              <input type="hidden" class="cart-item-id" value="{{product.id}}">
+              <input type="hidden" id="item-id" value="{{item.id}}">
+              {% csrf_token %}
+              <span class="cart-item-qty">{{item.quantity}}</span>
+            </div>
+            <p>${{product.price}}</p>
+          </div>
+          {% endwith %}
+          {% endfor %}
+          <div class="cart-td grid grid--3--cols cart-footer">
+            <div></div>
+            <p class="sub-total-text">Subtotal:</p>
+            <p class="sub-total-price">${{cart_total}}</p>
+          </div>
+          <div class="cart-td grid grid--3--cols cart-footer">
+            <div></div>
+            <p class="tax text">Fee:</p>
+            <p class="tax price">${{cart_fee}}</p>
+          </div>
+          <div class="cart-td grid grid--3--cols cart-sumary">
+            <div></div>
+            <p class="grand-total-text">Total:</p>
+            <p class="grand-total-price">${{grand_total}}</p>
+          </div>
+        </div>
+      </div>
+    
+
+      <div class="payment-container">
+        <h3 class="payment-heading">billing Info</h3>
+        <div class="payment-detail">
+          <div class="info-wrapper">
+            <input type="hidden" name="place-order" id="place-order" data-url="{% url 'create-order' %}">
+            <form class="info" method="POST" id="checkout-form" action="{% url 'create-order' %}">
+                <div class="from-wrapper grid grid--2--cols">
+                {% csrf_token %}
+                {% if request.user.is_authenticated %}
+                    {% for field in form %}
+                        <div class="info-item">
+                            <label for="{{field.name}}" class="info-label">{{field.label}}:</label>
+                            {{field}}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="info-item">
+                        <label for="first_name" class="info-label">First name:</label>
+                        <input type="text" required name="first_name" class="input">
+                    </div>
+                    <div class="info-item">
+                        <label for="last_name" class="info-label">Last name:</label>
+                        <input type="text" required name="last_name" class="input">
+                    </div>
+                    <div class="info-item">
+                        <label for="email" class="info-label">Email:</label>
+                        <input type="email" required name="email" class="input">
+                    </div>
+                    <div class="info-item">
+                        <label for="phone" class="info-label">Phone:</label>
+                        <input type="text" required name="phone" class="input">
+                    </div>
+                    <div class="info-item">
+                        <label for="address" class="info-label">Address:</label>
+                        <input type="text" required name="address" class="input">
+                    </div>
+                    <div class="info-item">
+                        <label for="state" class="info-label">State:</label>
+                        <input type="text" required name="state" class="input">
+                    </div>
+                    <div class="info-item">
+                        <label for="city" class="info-label">City:</label>
+                        <input type="text" required name="city" class="input">
+                    </div>
+                    <div class="info-item">
+                        <label for="country" class="info-label">Country:</label>
+                        <input type="text" required name="country" class="input">
+                    </div>
+                    <div class="info-item">
+                        <label for="pin_code" class="info-label">Pin code:</label>
+                        <input type="text" required name="pin_code" class="input">
+                    </div>
+                    
+                {% endif %}
+                </div>
+                <div class="payment-method" >
+                    <h3 class="payment-method-heading">Select payment method</h3>
+                    <div class="payment-wrapper">
+                        <label for="paypal" class="payment-item">
+                            <input type="radio" name="payment-method" value="paypal">
+                            <img src="{% static 'images/paypal-icon.png' %}" alt="paypal-payment" name="paypal">
+                        </label>
+                        <label for="stripe" class="payment-item">
+                            <input type="radio" name="payment-method" value="stripe">
+                            <img src="{% static 'images/stripe-icon.png' %}" alt="stripe-payment" name="stripe">
+                        </label>
+                    </div>
+                </div>
+                <span class="error-method-selection"></span>
+                <button class="btn btn-checkout" type="submit" onclick="return payment_method_check();">COMPLETE CHECKOUT</button>
+                <!-- <button class="btn btn-checkout" type="submit">PAY NOW</button> -->
+                
+            </form>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Section cart ends -->
+
+  {% include 'include/alert.html' %}
+{% endblock content %}
+
+
+{% block script %}
+<script src="{% static 'js/custom.js' %}" defer></script>
+<script src="{% static 'js/checkout.js' %}" defer></script>
+{% endblock script %}

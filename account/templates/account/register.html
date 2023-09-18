@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/utilities.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/queries.css' %}" />
+    <title>Register page</title>
+  </head>
+  <body>
+    <div class="form-container grid grid--2--cols">
+      <div class="form-cover register-cover">
+        <div class="reg-inner-wrapper">
+          <h2 class="cover-heading reg-heading">COFFEE-MUG</h2>
+          <p class="cover-text">
+            We believe that the best coffee mugs are the ones that tell a story.
+            That's why we offer personalized customization options, allowing you
+            to add your name, initials, or a special message to your mug. It's
+            the perfect way to make your coffee breaks even more meaningful and
+            memorable.
+          </p>
+          <a href="#" class="cover-link">Read more</a>
+        </div>
+      </div>
+      <div class="form-wrapper">
+        <div class="form-inner-wrapper">
+          <h2>Register</h2>
+          <form action="" method="POST">
+            {% csrf_token %} 
+            {% for field in form %}
+            <div class="form-group">
+              {{field}}
+            </div>
+            {% endfor %}
+            <button class="btn form-btn" type="submit">Register</button>
+          </form>
+          <p class="account no-account">
+            Already have account? <a href="{% url 'user-login' %}">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    {% include 'include/alert.html' %}
+  </body>
+</html>

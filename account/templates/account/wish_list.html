@@ -1,0 +1,70 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Wish list page{% endblock title %}
+
+{% block content %}
+
+    <!-- User profile starts -->
+    <div class="container grid grid--righ--col--lg">
+      {% include 'include/menubar.html' %}
+
+      <div class="wish-list">
+        <h2 class="wish-list-heading">Wish list</h2>
+        <div class="wish-list-container">
+          {% if wish_obj %}
+          {% for wish_item in wish_obj %}
+          <div class="wish-item grid grid--4--cols">
+            <div class="wish-image">
+              <img src="{{wish_item.product_picture.url}}" alt="wish-item" />
+            </div>
+            <div class="wish-item-title">
+              <p>{{wish_item}}</p>
+            </div>
+            <div class="wish-item-price">
+              <p>${{wish_item.price}}</p>
+            </div>
+            <div>
+              <a href="{% url 'remove-from-wishlist' wish_item.id %}" class="remove"><i class='bx bx-x bx-close'></i></a>
+            </div>
+          </div>
+          {% endfor %}
+
+          <!-- paginator -->
+          <div class="pagination">
+            <ul class="page-num">
+
+              {% if wish_obj.has_previous %}
+              <li><a href="?page={{wish_obj.previous_page_number}}"><i class='bx bx-chevron-left pag-btn pag-left'></i></a></li>
+              {% endif %}
+
+              {% for page in paginator.page_range %}
+              {% if page == wish_obj.number %}
+              <li class="num num-active"><a href="?page={{page}}">{{page}}</a></li>
+              {% else %}
+              <li class="num"><a href="?page={{page}}">{{page}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if wish_obj.has_next %}
+              <li><a href="?page={{wish_obj.next_page_number}}"><i class="bx bx-chevron-right pag-btn pag-right"></i></a></li>
+              {% endif %}
+            </ul>
+          </div>
+          <!-- paginator ends -->
+
+          
+          {% else %}
+          <div class="info-empty">
+            <h2>Your wish list is empty!</h2>
+          </div>
+          {% endif %}
+          
+        </div>
+      </div>
+    </div>
+
+    {% endblock content %}
+
+    {% block script %}
+    <script src="{% static 'js/custom.js' %}" defer></script>
+    {% endblock script %}

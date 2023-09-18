@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Customer comments{% endblock title %}
+
+{% block content %}
+
+<div class="container grid grid--righ--col--lg">
+    {% include 'include/menubar.html' %}
+    <div class="user-profile-detail">
+        <h2 class="profile-heading">Customer comments</h2>
+        {% for comment in cus_comments %}
+            <div class="cus-comment-wrapper">
+                <div class="cus-comment-item">
+                    <h3 class="cus-name">{{comment.user.first_name}}</h3>
+                    <p class="cus-comment-text">{{comment.comment}}</p>
+                    <p class="cus-comment-date">{{comment.created_date}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% include 'include/alert.html' %}
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/custom.js' %}" defer></script>
+{% endblock script %}

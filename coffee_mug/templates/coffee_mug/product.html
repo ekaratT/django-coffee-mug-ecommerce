@@ -1,0 +1,130 @@
+{% extends 'main.html' %}
+
+
+{% load static %}
+{% block title %}Product page{% endblock title %}
+
+{% block content %}
+
+    <!-- Section single product starts -->
+    <section class="section-single-product">
+      <div class="single-product-container grid grid--2--cols">
+        <div class="single-product-image">
+          <img src="{{product.product_picture.url}}" alt="single product" />
+        </div>
+        <div class="product-detail single--product">
+          <h3 class="product-title">{{product.product_name}}</h3>
+          <p class="product-description">
+            {{product.description}}
+          </p>
+          <input type="hidden" id="review-rating" name="review-rating" value="{{product.get_average_rating}}">
+          <div class="cus-rating-container"></div>
+          <p class="product-price">${{product.price}}</p>
+          {% if product.quantity > 0 %}
+          <div class="product-qty-action grid grid--3--cols">
+            {% csrf_token %}
+            <button class="btn btn-decrease qty-change" data-action="decrease">-</button>
+            <!-- In line css to fix css not loading -->
+            <span class="qty" style="display: flex; justify-content: center;" id="qty-{{product.id}}">1</span> 
+            <button class="btn btn-increase qty-change" data-action="increase">+</button>
+          </div>
+          <div class="proceed">
+            <a href="" class="btn add-to-cart" data-product-id={{product.id}} data-url="{% url 'add-to-cart' %}" data-override="false">ADD TO CART</a>
+            <a href="{% url 'add-to-wishlist' product.id %}">
+              <i class="bx bx-heart btn-wish"></i>
+            </a>
+          </div>
+          {% else %}
+          <div class="grid soldout">
+            <h2>Product sold out</h2>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    <!-- Section single product ends -->
+
+    <!-- Section product review starts -->
+    <section class="section-product-review">
+      <div class="container grid grid--2--cols">
+        <form class="product-review-wrapper" method="POST">
+          <h2 class="heading-primary product-review-heading">Give a review</h2>
+          {% csrf_token %}
+          <div class="product-comment">
+            <textarea name="product-review" id="product-review" rows="5" placeholder="Comment..."></textarea>
+          </div>
+          <div class="rating rating2">
+            <a href="#5" title="Give 5 stars" data-value="5" class="star">★</a>
+            <a href="#4" title="Give 4 stars" data-value="4" class="star">★</a>
+            <a href="#3" title="Give 3 stars" data-value="3" class="star">★</a>
+            <a href="#2" title="Give 2 stars" data-value="2" class="star">★</a>
+            <a href="#1" title="Give 1 star" data-value="1" class="star">★</a>
+          </div>
+          <button class="btn add-product-review" data-url="{% url 'add-product-review' %}" product-id="{{product.id}}" redirect-url="{% url 'single-product' product.id %}">Submit</button>
+        </form>
+      </div>
+    </section>
+    <!-- Section product review ends -->
+
+
+    {% if prod_reviews %}
+    <!-- Section product comment starts -->
+    <section class="product-review-display">    
+      <div class="container grid grid--2--cols">
+        <div class="">
+            <h2 class="profile-heading">Product reviews</h2>
+            <div class="cus-comment-wrapper">
+              {% for review in prod_reviews %}
+                <div class="comment-item single--product product-detail">
+                    <h3 class="cus-name">{{review.user.first_name}}</h3>
+                    <p class="cus-comment-text">{{review.comment}}</p>
+                    <input type="hidden" id="review-rating" name="review-rating" value="{{review.rating}}">
+                    <div class="cus-rating-container"></div>
+                    <p class="cus-comment-date">{{review.created_date}}</p>
+                </div>
+              {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!-- Section product comment ends -->
+
+
+
+    <!-- Section related products starts -->
+    <section class="section-products">
+      <div class="container">
+        <h2 class="product-heading">Related products</h2>
+        <div class="product-wrapper">
+          <i class="bx bx-chevron-left btn-card btn-left" id="btn-left"></i>
+          <ul class="product-scroller">
+            {% for prod in related_products %}
+            <li class="product-card grid">
+              <a href="{% url 'single-product' prod.id %}">
+                <div class="product-image" draggable="false">
+                  <img src="{{prod.product_picture.url}}" alt="" />
+                </div>
+                <div class="product-detail">
+                  <input type="hidden" id="review-rating" name="review-rating" value="{{prod.get_average_rating}}">
+                  <div class="cus-rating-container"></div>
+                  <p class="product-name">{{prod.product_name}}</p>
+                  <p class="product-price">${{prod.price}}</p>
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <i class="bx bx-chevron-right btn-card btn-right" id="btn-right"></i>
+        </div>
+      </div>
+    </section>
+    <!-- Section related products ends -->
+    {% include 'include/alert.html' %}
+    {% endblock content %}
+
+    {% block script %}
+    <script src="{% static 'js/custom.js' %}" defer></script>
+    <script src="{% static 'js/card.js' %}" defer></script>
+    
+    {% endblock script %}
+

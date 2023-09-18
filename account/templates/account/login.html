@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/utilities.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/queries.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet" />
+    <title>Login Page</title>
+  </head>
+  <body>
+    <div class="form-container grid grid--2--cols">
+      <div class="form-cover login-cover">
+        <h2 class="cover-heading loging-heading"><a href="{% url 'home' %}">COFFEE-MUG</a></h2>
+      </div>
+      <div class="form-wrapper">
+        <div class="form-inner-wrapper">
+          <h2>Login</h2>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <input
+                type="email"
+                id="username"
+                name="email"
+                required
+                placeholder="Johndo@email.com" />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                placeholder="Password..." />
+            </div>
+            <button class="btn form-btn" type="submit">Login</button>
+          </form>
+          <p class="forgot-password">Forgot password?<a href="{% url 'forgot-password' %}">Reset</a></p>
+          <p class="account no-account">
+            Don't have account yet?<a href="{% url 'register-user' %}">Sign up</a>
+          </p>
+        </div>
+      </div>
+    
+    </div>
+    {% include 'include/alert.html' %}
+  </body>
+</html>

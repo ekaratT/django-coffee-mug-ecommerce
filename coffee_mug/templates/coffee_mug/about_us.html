@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/utilities.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/queries.css' %}" />
+    <title>About us</title>
+</head>
+<body>
+    <div class="container">
+        <div class="about__wrapper">
+            <a href="{% url 'home' %}"><h1 class="heading-primary about-heading">COFFEE-MUG</h1></a>
+            <div class="about-us about-item">
+                <h2 class="heading-secondary">About Us</h2>
+                <p class="about-text">
+                    Welcome to COFFEE-MUG, your ultimate destination 
+                    for unique and captivating coffee mugs that bring joy to 
+                    every sip. At COFFEE-MUG we believe that a great 
+                    cup of coffee deserves an equally great vessel to enhance 
+                    the experience. Our carefully curated collection of coffee 
+                    mugs combines creativity, quality, and functionality, 
+                    making every morning ritual a moment of delight.
+                </p>
+            </div>
+            <div class="about-us about-item">
+                <h2 class="heading-secondary">Our Passion for Mugs</h2>
+                <p class="about-text">
+                    Founded by a team of coffee enthusiasts, 
+                    COFFEE-MUG was born out of a genuine love for the 
+                    artistry that goes into crafting the perfect coffee mug. 
+                    We understand that your mug is more than just a 
+                    container – it's an extension of your personality, 
+                    a reflection of your taste, and a source of comfort 
+                    in your daily routine. With this passion at our core, 
+                    we tirelessly search for mugs that stand out from the 
+                    ordinary and add a touch of charm to your coffee break.
+                </p>
+            </div>
+            <div class="about-us about-item">
+                <h2 class="heading-secondary">Diverse Styles for Every Taste</h2>
+                <p class="about-text">
+                    Whether you're a minimalist who appreciates clean lines, 
+                    an artist who seeks vibrant and intricate designs, 
+                    or a nostalgia-seeker drawn to vintage aesthetics, 
+                    our diverse range of coffee mugs caters to all tastes. 
+                    Our collection features an array of materials, colors, 
+                    and sizes, ensuring there's a perfect mug waiting for 
+                    you to claim as your own.
+                </p>
+            </div>
+            <div class="about-us about-item">
+                <h2 class="heading-secondary">Exceptional Service</h2>
+                <p class="about-text">
+                    At Coffee Mug Haven, we're dedicated to providing you with an exceptional shopping experience. From the moment you browse our collection to the time your carefully packaged mug arrives at your doorstep, we're here to ensure your satisfaction. Our friendly customer support team is always ready to assist you, and we take pride in the care we put into every order.
+                    Thank you for being a part of our journey at COFFEE-MUG. As you explore our collection, we hope you find a mug that resonates with you and becomes a cherished companion in your coffee-fueled moments of joy.
+                    <br>
+                    Sip, smile, and savor the beauty in every sip.
+                    <br>
+                </p>
+                <p class="about-thank">Warmly,<span>The COFFEE-MUG team</span> </p>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/custom.js' %}" defer></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+
+{% load static %}
+{% block title %}User profile{% endblock title %}
+{% block content %}
+
+
+    <!-- User profile starts -->
+    <div class="container grid grid--righ--col--lg">
+      {% include 'include/menubar.html' %}
+
+      <div class="user-profile-detail">
+        <form action="" class="profile-form" id="edit-profile" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <h2 class="heading-sm form-input-heading">My Account</h2>
+          <div class="form-emlement grid grid--2--cols">
+            {% for field in user_update_form %}
+            <div class="form-input">
+              <label for="name">{{field.label}}:</label>
+              <!-- <input type="email" id="email" name="email" required value="{{field}}"/> -->
+              {{field}}
+            </div>
+            {% endfor %}
+            {% for field in profile_form %}
+            <div class="form-input">
+              <label for="name">{{field.label}}:</label>
+              <!-- <input type="email" id="email" name="email" required value="{{field}}"/> -->
+              {{field}}
+            </div>
+            {% endfor %}
+          </div>
+          <button class="btn btn-save-change">Save change</button>
+        </form>
+      </div>
+    </div>
+    {% include 'include/alert.html' %}
+    {% endblock content %}
+
+    {% block script %}
+    <script src="{% static 'js/custom.js' %}" defer></script>
+    {% endblock script %}

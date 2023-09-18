@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Cart page{% endblock title %}
+
+{% block content %}
+
+    <!-- Section cart starts -->
+    <div class="container cart-wrapper grid">
+      <div class="cart-container">
+        <h3 class="cart-heading">Order review</h3>
+        <div class="cart">
+          <div class="cart-th grid grid--4--cols">
+            <h3>Product</h3>
+            <h3>Quantity</h3>
+            <h3>Price</h3>
+            <h3>Action</h3>
+          </div>
+          {% for item in cart %}
+          {% with product=item.product %}
+          <div class="product-data cart-td grid grid--4--cols" id="cart__item__{{item.id}}" data-item-id="{{item.id}}">
+            <div class="cart-image">
+              <img src="{{product.product_picture.url}}" alt="" />
+            </div>
+            <div class="item-qty">
+              <input type="hidden" class="cart-item-id" value="{{product.id}}">
+              <input type="hidden" id="item-id" value="{{item.id}}">
+              {% csrf_token %}
+              <span>
+                <i class="bx bx-minus cart-update cart-decrease-icon" cart-action="decrease" data-url="{% url 'update-cart' %}" data-override="true"></i>
+              </span>
+              <span class="cart-item-qty">{{item.quantity}}</span>
+              <span>
+                <i class="bx bx-plus cart-update cart-increase-icon" cart-action="increase" data-url="{% url 'update-cart' %}" data-override="true"></i>
+              </span>
+            </div>
+            <p>${{product.price}}</p>
+            <span class="btn-cart-action">
+              <i class="bx bx-x cart-action-icon cart-item-delete" product-id="{{product.id}}" data-url="{% url 'remove-cart' %}"></i>
+            </span>
+          </div>
+          {% endwith %}
+          {% endfor %}
+          <div class="cart-td grid grid--4--cols cart-footer">
+            <div></div>
+            <div></div>
+            <p class="sub-total-text">Subtotal:</p>
+            <p class="sub-total-price">$100</p>
+          </div>
+          <div class="cart-td grid grid--4--cols cart-footer">
+            <div></div>
+            <div></div>
+            <p class="tax text">Fee:</p>
+            <p class="tax price">$20</p>
+          </div>
+          <div class="cart-td grid grid--4--cols cart-sumary">
+            <div class="continue-shopping">
+              <i class="bx bx-chevrons-left continue-shopping-icon"></i>
+              <a href="{% url 'products' %}">
+                Shop more
+              </a>
+            </div>
+            <p class="grand-total-text">Total:</p>
+            <p class="grand-total-price">${{cart_total}}</p>
+          </div>
+        </div>
+      </div>
+      <a href="{% url 'checkout' %}" class="btn btn-checkout">CONFIRM</a>
+    </div>
+    <!-- Section cart ends -->
+
+  {% include 'include/alert.html' %}
+{% endblock content %}
+
+
+{% block script %}
+<script src="{% static 'js/custom.js' %}" defer></script>
+{% endblock script %}
+

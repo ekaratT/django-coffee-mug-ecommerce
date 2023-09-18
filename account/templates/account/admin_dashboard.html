@@ -1,0 +1,129 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Admin dashboard{% endblock title %}
+
+{% block content %}
+
+    
+    <!-- User profile starts -->
+    <div class="container grid grid--righ--col--lg">
+      {% include 'include/menubar.html' %}
+
+      <div class="dashbord">
+        <h2 class="heading-secondary sm--margin--bt">Dashbord</h2>
+        <div class="dash-wrapper grid grid--3--cols">
+          <div class="dash">
+            <div class="dash-item">
+              <i class="bx bx-money dash-icon"></i>
+              <div class="dash-info">
+                <p class="dash-num">${{revenue}}</p>
+                <p class="dash-text">Revenue</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash">
+            <div class="dash-item">
+              <i class="bx bx-notepad dash-icon"></i>
+
+              <div class="dash-info">
+                <p class="dash-num">{{order_items.count}}</p>
+                <p class="dash-text">Orders</p>
+              </div>
+            </div>
+          </div>
+          <div class="dash">
+            <div class="dash-item">
+              <i class="bx bx-category dash-icon"></i>
+
+              <div class="dash-info">
+                <p class="dash-num">{{categories.count}}</p>
+                <p class="dash-text">{% if categories.count > 1 %}Categories{% else %}Category{% endif %}</p>
+              </div>
+            </div>
+          </div>
+          <div class="dash">
+            <div class="dash-item">
+              <i class="bx bx-package dash-icon"></i>
+              <div class="dash-info">
+                <p class="dash-num">{{products.count}}</p>
+                <p class="dash-text">{% if products.count > 1%}Products{% else %}Product{% endif %}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% if order_obj %}
+        <!-- User's order starts -->
+        <div class="dash-order">
+          <div class="dash-heading-wrapper">
+            <h2 class="heading-secondary order-heading">Member Orders</h2>
+          </div>
+
+          <div class="order-list">
+            <table class="order-table">
+              <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Is paid</th>
+                <th>Stripe payment</th>
+              </tr>
+              {% for order in order_obj %}
+              <tr class="table-data">
+                <td>{{order.order.id}}</td>
+                <td>{{order.order.updated_date}}</td>
+                <td>{{order.product.product_name}}</td>
+                <td>{{order.quantity}}</td>
+                <td>${{order.order.get_grand_total}}</td>
+                <td>{{order.order.is_paid}}</td>
+                <td>
+                  {% if order.order.stripe_id %}
+                    <a href="{{order.order.get_stripe_url}}" target="_blank">{{order.order.stripe_id}}</a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+            <div class="pagination">
+              <ul class="page-num">
+  
+                {% if order_obj.has_previous %}
+                <li><a href="?page={{order_obj.previous_page_number}}"><i class='bx bx-chevron-left pag-btn pag-left'></i></a></li>
+                {% endif %}
+  
+                {% for page in paginator.page_range %}
+                {% if page == order_obj.number %}
+                <li class="num num-active"><a href="?page={{page}}">{{page}}</a></li>
+                {% else %}
+                <li class="num"><a href="?page={{page}}">{{page}}</a></li>
+                {% endif %}
+                {% endfor %}
+  
+                {% if order_obj.has_next %}
+                <li><a href="?page={{order_obj.next_page_number}}"><i class="bx bx-chevron-right pag-btn pag-right"></i></a></li>
+                {% endif %}
+  
+              </ul>
+              
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="info-empty">
+          <h2>No order yet!</h2>
+        </div>
+        {% endif %}
+        <!-- End user's order -->
+
+      </div>
+    </div>
+
+{% include 'include/alert.html' %}
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/custom.js' %}" defer></script>
+{% endblock script %}

@@ -1,0 +1,116 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}Home page{% endblock title %}
+{% block content %}
+
+    <!-- Section hero starts -->
+    <section class="section-hero">
+      <div class="container grid grid--2--cols">
+        <div class="hero-textbox">
+          <h2 class="hero-heading">The Mugs for your days</h2>
+          <p class="hero-description">
+            We bring you the best coffee mugs for your best feeling, finding
+            your coffee mug style for starting your lovely day.
+          </p>
+          <!-- <button class="btn btn-shop-now">shop now</button> -->
+          <a href="{% url 'products' %}" class="btn btn-shop-now">shop now</a>
+        </div>
+        <div class="hero-image-box">
+          <img
+            class="hero-image"
+            src="{% static 'images/friend.jpg' %}"
+            alt="hero-mug" />
+        </div>
+      </div>
+    </section>
+    <!-- Section hero ends -->
+
+    <!-- Section about starts -->
+    <section class="section-about">
+      <div class="container grid grid-sm-left">
+        <div class="about-image-box">
+          <img
+            class="about-image"
+            src="{% static 'images/ember.jpg' %}"
+            alt="about image" />
+        </div>
+        <div class="about-text-box">
+          <div class="about-wrapper">
+            <h3 class="about-heading">About us</h3>
+            <p class="about-description">
+              At COFFEE-MUG, we have a passion for crafting the perfect coffee mugs that bring joy and warmth to your daily coffee ritual. 
+              We believe that the simple pleasure of sipping your favorite brew from a well-designed mug can elevate your entire day.
+            </p>
+          </div>
+          <a href="{% url 'about-us' %}" class="about-read-more">Read more</a>
+        </div>
+      </div>
+    </section>
+    <!-- Section about ends -->
+
+    <!-- Section feature starts -->
+    <section class="section-feature">
+      <div class="container">
+        <div class="feature-wrapper">
+          <i class='bx bx-cart send-icon'></i>
+          <p class="send-text">Free shipping</p>
+        </div>
+      </div>
+    </section>
+    <!-- Section feature ends -->
+
+    <!-- Section category starts -->
+    <section class="section-category">
+      <div class="container grid grid--3--cols category">
+        {% for cat in categories %}
+        <a href="{% url 'single-category' cat.id %}">
+          <div class="category-box {{cat.category_name.lower}}-category" style="background-image: url({{cat.category_picture.url}});">
+            <p>{{cat}}</p>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    <!-- Section category ends -->
+
+    <!-- Section products starts -->
+    <section class="section-products">
+      <div class="container">
+        <h2 class="product-heading">COFFEE MUGS FOR YOU</h2>
+        <div class="product-wrapper">
+          <i class="bx bx-chevron-left btn-card btn-left" id="btn-left"></i>
+          <ul class="product-scroller">
+            {% for pro in products %}
+            <li class="product-card grid">
+              <a href="{% url 'single-product' pro.id %}">
+                <div class="product-image" draggable="false">
+                  <img src="{{pro.product_picture.url}}" alt="" />
+                </div>
+                <div class="product-detail">
+                  <input type="hidden" id="review-rating" name="review-rating" value="{{pro.get_average_rating}}">
+                  <p class="product-name">{{pro.product_name}}</p>
+                  <div class="cus-rating-container"></div>
+                  <p class="product-price">${{pro.price}}</p>
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <i class="bx bx-chevron-right btn-card btn-right" id="btn-right"></i>
+        </div>
+      </div>
+    </section>
+    <!-- Section products ends -->
+
+    {% endblock content %}
+
+    {% block script %}
+    <script src="{% static 'js/card.js' %}" defer></script>
+    <script src="{% static 'js/custom.js' %}" defer></script>
+
+    {% endblock script %}
+    {% include 'include/alert.html' %}
+  </body>
+</html>

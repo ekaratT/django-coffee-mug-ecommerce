@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}Category Page{% endblock title %}
+
+{% block content %}
+
+    <!-- Section category cover starts -->
+    <section class="section-category-cover">
+      <div class="container category-container" style="background-image: url({{category.category_picture.url}});">
+        <h1 class="category-cover-name {{category.category_name.lower}}-category">{{category.category_name}}</h1>
+      </div>
+    </section>
+    <!-- Section hero ends -->
+
+    <!-- Section products starts -->
+    <section class="section-products">
+      <div class="container">
+        <h2 class="product-heading">{{category.category_name}} mug products</h2>
+        <div class="product-wrapper">
+          <i class="bx bx-chevron-left btn-card btn-left" id="btn-left"></i>
+          <ul class="product-scroller">
+            {% for prod in products %}
+            <li class="product-card grid">
+              <a href="{% url 'single-product' prod.id %}">
+                <div class="product-image" draggable="false">
+                  <img src="{{prod.product_picture.url}}" alt="" />
+                </div>
+                <div class="product-detail">
+                  <input type="hidden" id="review-rating" name="review-rating" value="{{prod.get_average_rating}}">
+                  <div class="cus-rating-container"></div>
+                  <p class="product-name">{{prod.product_name}}</p>
+                  <p class="product-price">${{prod.price}}</p>
+                </div>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <i class="bx bx-chevron-right btn-card btn-right" id="btn-right"></i>
+        </div>
+      </div>
+    </section>
+    <!-- Section products ends -->
+
+    {% endblock content %}
+
+    {% block script %}
+    <script src="{% static 'js/custom.js' %}" defer></script>
+    <script src="{% static 'js/card.js' %}" defer></script>
+
+    {% endblock script %}
+  </body>
+</html>

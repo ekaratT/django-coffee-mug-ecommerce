@@ -1,0 +1,27 @@
+<!-- Section footer starts -->
+<section class="section-footer">
+    <div class="container footer-container">
+      <footer class="footer">
+        <h3 class="footer-heading footer-logo">coffee-mug</h3>
+        <div class="services">
+          <h3 class="footer-heading">Services</h3>
+          <ul class="services-list">
+            <li><a href="{% url 'about-us' %}">About us</a></li>
+            <!-- <li><a href="#">Contact us</a></li> -->
+          </ul>
+        </div>
+        <div class="comments">
+          <h3 class="footer-heading">leave us some comment</h3>
+          <form class="comment-wrapper grid" method="POST">
+            {% csrf_token %}
+            {% if not request.user.is_authenticated %}
+            <input class="comment-email" type="email" placeholder="Email address...">
+            {% endif %}
+            <textarea name="comment" id="comment" rows="5" placeholder="Your thought..."></textarea>
+            <button class="btn" id="add-comment" type="submit" data-url="{% url 'add-cus-comment' %}" redirect-url="{% url 'home' %}">SUBMIT</button>
+          </form>
+        </div>
+      </footer>
+    </div>
+  </section>
+  <!-- Section footer ends -->

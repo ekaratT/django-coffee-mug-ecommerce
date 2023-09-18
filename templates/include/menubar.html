@@ -1,0 +1,77 @@
+{% load static %}
+
+<div class="profile-wrapper">
+    <div class="profile">
+      <div class="profile-image">
+        <img src="{{user.userprofile.profile_picture.url}}" alt="user-profile">
+      </div>
+      <h3 class="profile-name">{{user.first_name}}</h3>
+    </div>
+    <ul class="menu">
+      <li class="menu-list list-active">
+        <a href="{% url 'user-profile' %}">
+          <div class="list-wrapper">
+            <i class="bx bx-user-circle user-menu-icon"></i>
+            <p class="menu-text">Account</p>
+          </div>
+        </a>
+      </li>
+      {% if request.user.is_staff %}
+      <li class="menu-list">
+        <a href="{% url 'admin-dashboard' %}">
+          <div class="list-wrapper">
+            <i class='bx bx-bar-chart-alt user-menu-icon'></i>
+            <p class="menu-text">Dashbord</p>
+          </div>
+        </a>
+      </li>
+      {% endif %}
+      <li class="menu-list">
+        <a href="{% url 'categories' %}">
+          <div class="list-wrapper">
+            <i class='bx bx-layer user-menu-icon'></i>
+            <p class="menu-text">Categories</p>
+          </div>
+        </a>
+      </li>
+      <li class="menu-list">
+        <a href="{% url 'products' %}">
+          <div class="list-wrapper">
+            <i class='bx bx-package user-menu-icon'></i>
+            <p class="menu-text">Products</p>
+          </div>
+        </a>
+      </li>
+      <li class="menu-list">
+        <a href="{% url 'change-password' %}">
+          <div class="list-wrapper">
+            <i class="bx bx-lock-alt user-menu-icon"></i>
+            <p class="menu-text">Change password</p>
+          </li>
+        </a>
+      <li class="menu-list">
+        <a href="{% url 'wishlist' %}">
+          <div class="list-wrapper">
+            <i class="bx bx-heart user-menu-icon"></i>
+            <p class="menu-text">Wish list</p>
+          </div>
+        </a>
+      </li>
+      <li class="menu-list">
+        <a href="{% url 'customer-comments' %}">
+          <div class="list-wrapper">
+            <i class='bx bx-comment user-menu-icon'></i>
+            <p class="menu-text">Customer comments</p>
+          </div>
+        </a>
+      </li>
+      <li class="menu-list">
+        <a href="{% url 'user-logout' %}">
+          <div class="list-wrapper">
+            <i class="bx bx-log-out user-menu-icon"></i>
+            <p class="menu-text">Logout</p>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
