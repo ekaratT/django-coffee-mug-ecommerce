@@ -1,0 +1,1 @@
+# django-coffee-mug-ecommerce
