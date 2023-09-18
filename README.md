@@ -28,3 +28,7 @@ No register required.
 - Update cart item qty.
 - Checkout.
 - Give general comment for the website.
+
+## Sample screenshots.
+## Products page
+![](screenshots/products.jpeg)
