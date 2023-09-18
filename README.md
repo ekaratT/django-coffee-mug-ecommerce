@@ -32,3 +32,9 @@ No register required.
 ## Sample screenshots.
 ## Products page
 ![](screenshots/products.jpeg)
+
+## Checkout page
+![](screenshots/checkout.jpeg)
+
+## Admin dashboard page
+![](screenshots/admindashboard.jpeg)
